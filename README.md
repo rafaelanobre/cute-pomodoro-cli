@@ -50,15 +50,15 @@ The timer will start immediately. To stop the timer at any time, simply press Ct
 ## Future Features (Roadmap)
 This timer is just getting started! Here are some of the features we'd love to add next:
 
-[ ] **Pomodoro Menu:** A simple text-based menu to start, pause, resume, and reset your Pomodoro sessions.
+- [ ] **Pomodoro Menu:** A simple text-based menu to start, pause, resume, and reset your Pomodoro sessions.
 
-[ ] **Task List Integration:** Add, complete, and view tasks for your current work session.
+- [ ] **Task List Integration:** Add, complete, and view tasks for your current work session.
 
-[ ] **Session Statistics:** Track your completed Pomodoros and total focus time by day, week, month, year and total to see your productivity soar!
+- [ ] **Session Statistics:** Track your completed Pomodoros and total focus time by day, week, month, year and total to see your productivity soar!
 
-[ ] **Customizable Timers:** Allow users to set their own durations for work and break sessions via command-line arguments (e.g., pomodoro-init --work 30 --break 10).
+- [ ] **Customizable Timers:** Allow users to set their own durations for work and break sessions via command-line arguments (e.g., pomodoro-init --work 30 --break 10).
 
-[ ] **Sound Notifications:** Optional sound alerts for when a session ends.
+- [ ] **Sound Notifications:** Optional sound alerts for when a session ends.
 
-[ ] **Themes & Colors:** Customize the look of your timer with different color schemes and different asciis, such as cats, dogs, plants, anime, and so on!
+- [ ] **Themes & Colors:** Customize the look of your timer with different color schemes and different asciis, such as cats, dogs, plants, anime, and so on!
 
