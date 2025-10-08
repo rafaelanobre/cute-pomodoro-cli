@@ -1,6 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pomodoro-cli"
 version = "0.1.0"
-description = "Add your description here"
+authors = [
+  { name="Rafaela Nobre", email="raafanobre@gmail.com" },
+]
+description = "A simple and cute Pomodoro timer for the terminal."
+readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
+
+[project.scripts]
+pomodoro-init = "pomodoro_timer.main:main"
