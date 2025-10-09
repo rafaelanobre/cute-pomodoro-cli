@@ -1,12 +1,20 @@
+import curses
 from pathlib import Path
 
 
 class ThemeManager:
+    """Manages ASCII art loading and color mappings for both ANSI and curses."""
+
     def __init__(self):
-        self.colors = {
+        self.ansi_colors = {
             "pink": "\033[95m",
             "blue": "\033[96m",
             "default": "\033[0m"
+        }
+        self.curses_colors = {
+            "pink": curses.COLOR_MAGENTA,
+            "blue": curses.COLOR_CYAN,
+            "default": -1
         }
         self.reset = "\033[0m"
 
@@ -15,19 +23,20 @@ class ThemeManager:
         try:
             return art_path.read_text(encoding='utf-8')
         except FileNotFoundError:
-            return "🍅"
+            return ""
 
-    def get_color_code(self, color_name):
-        return self.colors.get(color_name, self.colors["default"])
-
-    def load_logo(self, color):
+    def load_logo(self):
         logo_path = Path(__file__).parent / "images" / "logo.txt"
         try:
-            logo = logo_path.read_text(encoding='utf-8')
-            color_code = self.get_color_code(color)
-            print(f"{color_code}{logo}{self.reset}")
+            return logo_path.read_text(encoding='utf-8')
         except FileNotFoundError:
-            pass
+            return ""
 
-    def apply_color(self, text, color_code):
+    def get_ansi_color_code(self, color_name):
+        return self.ansi_colors.get(color_name, self.ansi_colors["default"])
+
+    def get_curses_color(self, color_name):
+        return self.curses_colors.get(color_name, self.curses_colors["default"])
+
+    def apply_ansi_color(self, text, color_code):
         return f"{color_code}{text}{self.reset}"
