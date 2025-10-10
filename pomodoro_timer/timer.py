@@ -6,6 +6,7 @@ from _curses import window
 
 from pomodoro_timer.config import PomodoroConfig
 from pomodoro_timer.theme_manager import ThemeManager
+from pomodoro_timer.ascii_numbers import ASCIINumbers
 
 
 class PomodoroTimer:
@@ -109,10 +110,10 @@ class PomodoroTimer:
             self._clear_screen()
 
             mins, secs = divmod(seconds, 60)
-            timer = f"{mins:02d}:{secs:02d}"
+            ascii_timer = ASCIINumbers.render_time(mins, secs)
 
-            self._display_centered(session_display, y_offset=-height // 6)
-            self._display_centered(timer, bold=True)
+            self._display_centered(session_display, y_offset=-height // 4)
+            self._display_centered(ascii_timer, bold=True)
 
             controls = "Press Ctrl+C to quit"
             self._safe_addstr(height - 2, (width - len(controls)) // 2, controls, curses.A_DIM)
