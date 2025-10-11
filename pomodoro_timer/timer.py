@@ -73,11 +73,14 @@ class PomodoroTimer:
         if bold:
             attr |= curses.A_BOLD
 
+        max_line_width = max(len(line.rstrip()) for line in lines) if lines else 0
+        block_start_x = max(0, (width - max_line_width) // 2)
+
         for i, line in enumerate(lines):
             y_pos = start_y + i
             if 0 <= y_pos < height:
-                x_pos = max(0, (width - len(line)) // 2)
-                self._safe_addstr(y_pos, x_pos, line, attr)
+                stripped_line = line.rstrip()
+                self._safe_addstr(y_pos, block_start_x, stripped_line, attr)
 
         self.stdscr.refresh()
 
@@ -102,20 +105,50 @@ class PomodoroTimer:
         self._display_centered(content)
         time.sleep(2)
 
-    def _run_countdown(self, minutes: int, session_display: str):
+    def _run_countdown(self, minutes: int, session_display: str, ascii_art: str = ""):
         seconds = minutes * 60
         height, width = self._get_screen_dimensions()
 
-        while seconds > 0:
-            self._clear_screen()
+        self._clear_screen()
 
+        if ascii_art:
+            static_content = f"{ascii_art}\n\n{session_display}"
+        else:
+            static_content = session_display
+
+        static_lines = static_content.split('\n')
+        static_height = len(static_lines)
+
+        while seconds > 0:
             mins, secs = divmod(seconds, 60)
             ascii_timer = ASCIINumbers.render_time(mins, secs)
+            timer_lines = ascii_timer.split('\n')
 
-            self._display_centered(session_display, y_offset=-height // 4)
-            self._display_centered(ascii_timer, bold=True)
+            total_height = static_height + 2 + len(timer_lines)
+            start_y = max(0, (height - total_height) // 2)
+
+            attr = self.color_pair | curses.A_BOLD
+
+            for i, line in enumerate(static_lines):
+                y_pos = start_y + i
+                if 0 <= y_pos < height:
+                    x_pos = max(0, (width - len(line)) // 2)
+                    self.stdscr.move(y_pos, 0)
+                    self.stdscr.clrtoeol()
+                    self._safe_addstr(y_pos, x_pos, line, attr)
+
+            timer_start_y = start_y + static_height + 2
+            for i, line in enumerate(timer_lines):
+                y_pos = timer_start_y + i
+                if 0 <= y_pos < height:
+                    x_pos = max(0, (width - len(line)) // 2)
+                    self.stdscr.move(y_pos, 0)
+                    self.stdscr.clrtoeol()
+                    self._safe_addstr(y_pos, x_pos, line, attr)
 
             controls = "Press Ctrl+C to quit"
+            self.stdscr.move(height - 2, 0)
+            self.stdscr.clrtoeol()
             self._safe_addstr(height - 2, (width - len(controls)) // 2, controls, curses.A_DIM)
 
             self.stdscr.refresh()
@@ -127,21 +160,21 @@ class PomodoroTimer:
         message = f"🍅 Work Session {cycle} - {self.config.work_mins} minutes\nStay focused! 🍅"
 
         self._show_session_intro(ascii_art, message)
-        self._run_countdown(self.config.work_mins, message)
+        self._run_countdown(self.config.work_mins, message, ascii_art)
 
     def _run_short_break(self, cycle: int):
         ascii_art = self.theme_manager.load_ascii_art(self.config.theme, "short_break")
         message = f"☕ Short Break {cycle} - {self.config.short_break_mins} minutes\nTake a short break! ☕"
 
         self._show_session_intro(ascii_art, message)
-        self._run_countdown(self.config.short_break_mins, message)
+        self._run_countdown(self.config.short_break_mins, message, ascii_art)
 
     def _run_long_break(self):
         ascii_art = self.theme_manager.load_ascii_art(self.config.theme, "long_break")
         message = f"🎉 Work done! Long Break - {self.config.long_break_mins} minutes\nYou've earned it! 🎉"
 
         self._show_session_intro(ascii_art, message)
-        self._run_countdown(self.config.long_break_mins, message)
+        self._run_countdown(self.config.long_break_mins, message, ascii_art)
 
     def _show_completion_screen(self):
         self._clear_screen()
