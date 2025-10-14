@@ -19,14 +19,14 @@ class ThemeManager:
         self.reset = "\033[0m"
 
     def load_ascii_art(self, theme, art_type):
-        art_path = Path(__file__).parent / "images" / theme / f"{art_type}.txt"
+        art_path = Path(__file__).parent / "assets" / theme / f"{art_type}.txt"
         try:
             return art_path.read_text(encoding='utf-8')
         except FileNotFoundError:
             return ""
 
     def load_logo(self):
-        logo_path = Path(__file__).parent / "images" / "logo.txt"
+        logo_path = Path(__file__).parent / "assets" / "logo.txt"
         try:
             return logo_path.read_text(encoding='utf-8')
         except FileNotFoundError:
