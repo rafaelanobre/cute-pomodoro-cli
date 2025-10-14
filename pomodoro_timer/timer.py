@@ -8,6 +8,7 @@ from pomodoro_timer.config import PomodoroConfig
 from pomodoro_timer.theme_manager import ThemeManager
 from pomodoro_timer.ascii_numbers import ASCIINumbers
 from pomodoro_timer.progress_bar import ProgressBar
+from pomodoro_timer.sound_manager import SoundManager
 
 
 class PomodoroTimer:
@@ -16,6 +17,7 @@ class PomodoroTimer:
     def __init__(self, config: PomodoroConfig, theme_manager: ThemeManager):
         self.config = config
         self.theme_manager = theme_manager
+        self.sound_manager = SoundManager()
         self.stdscr: Optional[window] = None
         self.color_pair: int = 0
 
@@ -209,6 +211,7 @@ class PomodoroTimer:
 
         self._show_session_intro(ascii_art, message)
         self._run_countdown(self.config.work_mins, message, ascii_art)
+        self.sound_manager.play_notification()
 
     def _run_short_break(self, cycle: int):
         ascii_art = self.theme_manager.load_ascii_art(self.config.theme, "short_break")
@@ -216,6 +219,7 @@ class PomodoroTimer:
 
         self._show_session_intro(ascii_art, message)
         self._run_countdown(self.config.short_break_mins, message, ascii_art)
+        self.sound_manager.play_notification()
 
     def _run_long_break(self):
         ascii_art = self.theme_manager.load_ascii_art(self.config.theme, "long_break")
@@ -223,6 +227,7 @@ class PomodoroTimer:
 
         self._show_session_intro(ascii_art, message)
         self._run_countdown(self.config.long_break_mins, message, ascii_art)
+        self.sound_manager.play_notification()
 
     def _show_completion_screen(self):
         self._clear_screen()

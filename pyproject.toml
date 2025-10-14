@@ -11,7 +11,9 @@ authors = [
 description = "A simple and cute Pomodoro timer for the terminal."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+  "playsound==1.3.0"
+]
 
 [project.scripts]
 pomodoro-init = "pomodoro_timer.main:main"
