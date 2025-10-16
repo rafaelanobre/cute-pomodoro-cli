@@ -75,17 +75,17 @@ This timer is just getting started! Here are some of the features we'd love to a
 
 - [ ] **Task List Integration:** Add, complete, and view tasks for your current work session.
 
-- [ ] **Session Statistics:** Track your completed Pomodoros and total focus time by day, week, month, year and total to see your productivity soar!
+- [X] ~~**Session Statistics (Backend):** Track your completed Pomodoros and total focus time - data is now automatically saved to `~/.pomodoro/stats.json`! UI for viewing stats coming soon.~~
 
 - [X] ~~**Customizable Timers:** Allow users to set their own durations for work and break sessions via command-line arguments, as well as how many sessions/cycles they want to focus on.~~
 
-- [ ] **Sound Notifications:** Optional sound alerts for when a session ends.
+- [X] ~~**Sound Notifications:** Optional sound alerts for when a session ends.~~
 
 - [X] ~~**Themes & Colors:** Customize the look of your timer with different color schemes and different asciis, such as cats, dogs, plants, anime, and so on!~~
 
-- [ ] **Progress Bar:** Visual progress indicator showing elapsed/remaining time in the session.
+- [X] ~~**Progress Bar:** Visual progress indicator showing elapsed/remaining time in the session.~~
 
-- [ ] **Milestone Messages:** Cute encouraging messages at key moments (e.g., "Halfway there!" at 50%, "Almost done!" at 80%).
+- [X] ~~**Milestone Messages:** Cute encouraging messages at key moments (e.g., "Halfway there!" at 50%, "Almost done!" at 80%).~~
 
 - [ ] **Decorative Borders:** Frame the countdown with cute borders or patterns to make it more visually appealing.
 

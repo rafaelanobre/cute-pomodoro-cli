@@ -5,6 +5,7 @@ from typing import Optional
 from _curses import window
 
 from pomodoro_timer.config import PomodoroConfig
+from pomodoro_timer.statistics import StatisticsManager
 from pomodoro_timer.theme_manager import ThemeManager
 from pomodoro_timer.ascii_numbers import ASCIINumbers
 from pomodoro_timer.progress_bar import ProgressBar
@@ -14,10 +15,17 @@ from pomodoro_timer.sound_manager import SoundManager
 class PomodoroTimer:
     """Full-screen TUI Pomodoro timer using curses for professional display."""
 
-    def __init__(self, config: PomodoroConfig, theme_manager: ThemeManager):
+    def __init__(
+            self,
+            config: PomodoroConfig,
+            theme_manager: ThemeManager,
+            sound_manager: SoundManager,
+            statistics_manager: StatisticsManager,
+    ):
         self.config = config
         self.theme_manager = theme_manager
-        self.sound_manager = SoundManager()
+        self.sound_manager = sound_manager
+        self.statistics_manager = statistics_manager
         self.stdscr: Optional[window] = None
         self.color_pair: int = 0
 
@@ -211,6 +219,7 @@ class PomodoroTimer:
 
         self._show_session_intro(ascii_art, message)
         self._run_countdown(self.config.work_mins, message, ascii_art)
+        self.statistics_manager.record_session("work", self.config.work_mins)
         self.sound_manager.play_notification()
 
     def _run_short_break(self, cycle: int):
@@ -219,6 +228,7 @@ class PomodoroTimer:
 
         self._show_session_intro(ascii_art, message)
         self._run_countdown(self.config.short_break_mins, message, ascii_art)
+        self.statistics_manager.record_session("short_break", self.config.short_break_mins)
         self.sound_manager.play_notification()
 
     def _run_long_break(self):
@@ -227,6 +237,7 @@ class PomodoroTimer:
 
         self._show_session_intro(ascii_art, message)
         self._run_countdown(self.config.long_break_mins, message, ascii_art)
+        self.statistics_manager.record_session("long_break", self.config.long_break_mins)
         self.sound_manager.play_notification()
 
     def _show_completion_screen(self):
