@@ -9,6 +9,7 @@ class PomodoroConfig:
         self.number_of_cycles = 4
         self.theme = "default"
         self.color = "pink"
+        self.show_stats = False
 
     @classmethod
     def from_args(cls):
@@ -58,6 +59,11 @@ class PomodoroConfig:
             metavar="NUMBER",
             help="Number of work/break cycles before long break (default: 4)"
         )
+        parser.add_argument(
+            "--stats",
+            action="store_true",
+            help="View session statistics instead of starting timer"
+        )
 
         args = parser.parse_args()
 
@@ -67,3 +73,4 @@ class PomodoroConfig:
         self.short_break_mins = args.short_break
         self.long_break_mins = args.long_break
         self.number_of_cycles = args.cycles
+        self.show_stats = args.stats

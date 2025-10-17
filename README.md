@@ -9,8 +9,10 @@ This little command-line tool follows the classic Pomodoro Technique: a 25-minut
 ## Features
 
 * **Classic Pomodoro Workflow:** Automatically cycles through work sessions and short/long breaks.
-* **Minimalist Terminal UI:** A clean, in-place countdown timer that doesn't clutter your screen.
-* **Friendly Notifications:** Cute ascii messages and sound to let you know when to start and stop.
+* **Minimalist Terminal UI:** A clean, full-screen countdown timer with ASCII art that doesn't clutter your screen.
+* **Session Statistics:** Track your productivity with detailed statistics (today, week, month, all time).
+* **Friendly Notifications:** Cute ASCII messages and sound alerts to let you know when to start and stop.
+* **Customizable Themes & Colors:** Choose from different ASCII art themes and color schemes.
 * **Lightweight & Simple:** No complex dependencies, just pure Python and playsound.
 
 ## Installation
@@ -45,6 +47,9 @@ Once installed, you can run the timer from anywhere in your terminal!
 # Basic usage with default settings (25min work, 5min short break, 15min long break, 4 cycles)
 pomodoro-init
 
+# View your session statistics
+pomodoro-init --stats
+
 # Customize timer durations
 pomodoro-init --work 30 --short-break 10 --long-break 20
 
@@ -53,6 +58,9 @@ pomodoro-init --cycles 6
 
 # Choose a theme and color
 pomodoro-init --theme cats --color blue
+
+# View stats with custom color
+pomodoro-init --stats --color blue
 
 # Combine all options
 pomodoro-init --work 50 --short-break 10 --cycles 3 --theme dogs --color pink
@@ -65,8 +73,23 @@ Available options:
 - `--cycles NUMBER` - Number of work/break cycles before long break (default: 4)
 - `--theme {default,cats,dogs}` - Choose an ASCII art theme
 - `--color {pink,blue,default}` - Choose a color scheme
+- `--stats` - View session statistics instead of starting timer
 
 The timer will start immediately. To stop the timer at any time, simply press Ctrl+C.
+
+### Statistics View
+
+When viewing statistics with `--stats`, you can:
+- Press `1` to view today's stats
+- Press `2` to view this week's stats
+- Press `3` to view this month's stats
+- Press `4` to view all-time stats
+- Press `Q` or `ESC` to exit
+
+The stats screen shows:
+- Total work sessions, short breaks, and long breaks for the selected period
+- A motivational message showing your total focus time
+- Interactive period switching to track your productivity over time
 
 ## Future Features (Roadmap)
 This timer is just getting started! Here are some of the features we'd love to add next:
@@ -75,7 +98,7 @@ This timer is just getting started! Here are some of the features we'd love to a
 
 - [ ] **Task List Integration:** Add, complete, and view tasks for your current work session.
 
-- [X] ~~**Session Statistics (Backend):** Track your completed Pomodoros and total focus time - data is now automatically saved to `~/.pomodoro/stats.json`! UI for viewing stats coming soon.~~
+- [X] ~~**Session Statistics:** Track your completed Pomodoros and total focus time with a beautiful full-screen UI! View stats by day, week, month, or all time. Access via `pomodoro-init --stats`.~~
 
 - [X] ~~**Customizable Timers:** Allow users to set their own durations for work and break sessions via command-line arguments, as well as how many sessions/cycles they want to focus on.~~
 
