@@ -10,6 +10,7 @@ from pomodoro_timer.theme_manager import ThemeManager
 from pomodoro_timer.ascii_numbers import ASCIINumbers
 from pomodoro_timer.progress_bar import ProgressBar
 from pomodoro_timer.sound_manager import SoundManager
+from pomodoro_timer.timer_state import TimerState
 
 
 class PomodoroTimer:
@@ -57,7 +58,8 @@ class PomodoroTimer:
 
     def _initialize_curses(self):
         curses.curs_set(0)
-        self.stdscr.nodelay(False)
+        self.stdscr.nodelay(True)
+        self.stdscr.timeout(100)
         self.stdscr.keypad(True)
 
         if curses.has_colors():
