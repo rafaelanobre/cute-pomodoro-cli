@@ -13,11 +13,13 @@ class StatisticsManager:
         if not self.data or 'sessions' not in self.data:
             self.data = {"sessions": []}
 
-    def record_session(self, session_type: str, duration: int) -> None:
+    def record_session(self, session_type: str, duration: float) -> None:
+        """Record a completed or partial session."""
         session = {
             "date": datetime.now().isoformat(),
             "type": session_type,
-            "duration": duration
+            "duration": round(duration, 2),
+            "partial": duration % 1 != 0
         }
         self.data["sessions"].append(session)
         self.storage_manager.save_json('stats.json', self.data)
